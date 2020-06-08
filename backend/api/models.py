@@ -1,4 +1,4 @@
-from django.db import models
+from djongo import models
 import uuid
 
 unique_id = uuid.uuid4().hex
@@ -15,9 +15,11 @@ class Intent(models.Model):
 
 
 class SampleKeyword(models.Model):
-    _id = models.CharField(max_length=100,
-                           primary_key=True, default=unique_id)
+    # _id = models.CharField(max_length=100,
+    #                        primary_key=True, default=unique_id)
+    _id = models.ObjectIdField()
     keywords = models.CharField(max_length=200)
+    newkeywords = models.CharField(max_length=200, blank=True)
     intentId = models.ForeignKey(
         Intent, to_field='_id', on_delete=models.CASCADE, db_column='intentId', related_name='keywords')
 
@@ -26,8 +28,9 @@ class SampleKeyword(models.Model):
 
 
 class Keyword(models.Model):
-    _id = models.CharField(max_length=100,
-                           primary_key=True, default=unique_id)
+    _id = models.ObjectIdField()
+    # _id = models.CharField(max_length=100,
+    #                        primary_key=True, default=unique_id)
     keyword = models.CharField(max_length=200)
 
     class Meta:
